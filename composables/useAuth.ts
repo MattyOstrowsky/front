@@ -123,7 +123,7 @@ export const useAuth = () => {
   }
 
   const goToDashboard = () => navigateTo('/dashboard')
-  const goToSettings = () => navigateTo('/dashboard/settings')
+  const goToSettings = () => navigateTo('/settings')
 
   return {
     user,

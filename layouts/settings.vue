@@ -1,25 +1,33 @@
 <template>
   <div class="flex flex-col h-screen">
-    <header class="h-16 border-b flex items-center justify-end px-6 flex-shrink-0">
+    <header class="shadow-sm border-b">
       <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
-        <NuxtLink to="/" class="text-xl font-bold">BiznesScan</NuxtLink>
+        <NuxtLink to="/" class="text-xl font-bold">Kontrahent.io</NuxtLink>
         <nav class="flex items-center space-x-4">
           <template v-if="!isLoggedIn">
             <Button @click="login">Login</Button>
             <Button variant="outline" @click="register">Register</Button>
           </template>
           <template v-else>
-                        <DropdownMenuContent align="end" class="w-48">
-              <DropdownMenuItem @click="goToSettings">
-                <Icon icon="lucide:settings" class="w-4 h-4 mr-2" />
-                Ustawienia
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem @click="logout">
-                <Icon icon="lucide:log-out" class="w-4 h-4 mr-2" />
-                Wyloguj
-              </DropdownMenuItem>
-            </DropdownMenuContent>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <Button variant="ghost" class="relative p-2">
+                  <Icon icon="lucide:user" class="h-5 w-5" />
+                  <span class="sr-only">Open user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" class="w-48">
+                <DropdownMenuItem @click="goToSettings">
+                  <Icon icon="lucide:settings" class="w-4 h-4 mr-2" />
+                  Ustawienia
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem @click="logout">
+                  <Icon icon="lucide:log-out" class="w-4 h-4 mr-2" />
+                  Wyloguj
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </template>
           
           <ClientOnly>
@@ -49,7 +57,17 @@
       </header>
 
     <div class="flex flex-1 overflow-hidden">
-      <aside class="w-64 flex-shrink-0 border-r flex flex-col">
+      <aside class="w-64 flex-shrink-0 border-r flex flex-col p-4">
+        <nav class="flex flex-col gap-2">
+            <NuxtLink to="/dashboard" class="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                <Icon icon="lucide:search" class="w-5 h-5" />
+                <span>Wyszukaj</span>
+            </NuxtLink>
+            <NuxtLink to="/dashboard/history" class="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                <Icon icon="lucide:history" class="w-5 h-5" />
+                <span>Historia</span>
+            </NuxtLink>
+        </nav>
         </aside>
 
       <main class="flex-1 overflow-y-auto p-6">
@@ -66,7 +84,8 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem
+  DropdownMenuItem,
+  DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
 const { goToSettings, isLoggedIn, login, register, logout } = useAuth()
