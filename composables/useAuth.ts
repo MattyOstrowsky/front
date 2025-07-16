@@ -1,6 +1,5 @@
 import { navigateTo, useRuntimeConfig, useCookie, useState } from '#app'
 
-// Definiujemy interfejs dla danych użytkownika
 interface User {
   sub: string
   name?: string
@@ -10,11 +9,10 @@ interface User {
 
 export const useAuth = () => {
   const config = useRuntimeConfig()
-  const token = useCookie<string | null>('auth_token')
-  const idToken = useCookie<string | null>('auth_id_token')
+  const token = useCookie<string | null>('auth_token', { sameSite: 'lax', secure: true })
+  const idToken = useCookie<string | null>('auth_id_token', { sameSite: 'lax', secure: true })
   
   const user = useState<User | null>('user', () => null)
-
   const isLoggedIn = computed(() => !!token.value)
 
   const generateAndStorePKCE = async () => {
@@ -23,10 +21,10 @@ export const useAuth = () => {
     if (process.client) {
       sessionStorage.setItem('pkce_verifier', code_verifier)
     }
-    return { code_verifier, code_challenge }
+    return { code_challenge }
   }
 
-  const redirectToLogin = async (screenHint?: 'signup') => {
+  const redirectToLogin = async (prompt?: 'create') => {
     const { code_challenge } = await generateAndStorePKCE()
     
     const params = new URLSearchParams({
@@ -38,8 +36,8 @@ export const useAuth = () => {
       code_challenge_method: 'S256',
     })
 
-    if (screenHint) {
-      params.append('screen_hint', screenHint)
+    if (prompt) {
+      params.append('prompt', prompt)
     }
 
     if (process.client) {
@@ -53,24 +51,22 @@ export const useAuth = () => {
     const code_verifier = sessionStorage.getItem('pkce_verifier')
     if (!code_verifier) {
       console.error('Brak PKCE verifier w sesji.')
-      return
+      return navigateTo('/')
     }
 
     try {
-      const params = new URLSearchParams({
-        grant_type: 'authorization_code',
-        client_id: config.public.clientId,
-        redirect_uri: config.public.redirectUri,
-        code,
-        code_verifier,
-      })
-      
       const response = await $fetch<{ access_token: string, id_token: string }>(
         `${config.public.authUrl}/oauth/v2/token`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: params,
+          body: new URLSearchParams({
+            grant_type: 'authorization_code',
+            client_id: config.public.clientId,
+            redirect_uri: config.public.redirectUri,
+            code,
+            code_verifier,
+          }),
         }
       )
       
@@ -83,9 +79,7 @@ export const useAuth = () => {
       navigateTo('/dashboard')
     } catch (e) {
       console.error('Błąd podczas wymiany kodu na token:', e)
-      token.value = null
-      idToken.value = null
-      user.value = null
+      await logout()
     }
   }
 
@@ -101,14 +95,12 @@ export const useAuth = () => {
       user.value = userInfo
     } catch (e) {
       console.error('Błąd podczas pobierania danych użytkownika:', e)
-      token.value = null
-      idToken.value = null
-      user.value = null
+      await logout()
     }
   }
 
-  const logout = () => {
-    const postLogoutRedirectUri = 'http://app.localhost/logout'
+  const logout = async () => {
+    const postLogoutRedirectUri = `${window.location.origin}/logout`
     const idTokenHint = idToken.value
 
     token.value = null
@@ -124,27 +116,24 @@ export const useAuth = () => {
     }
   }
   
-  // Funkcja do inicjalizacji stanu użytkownika przy ładowaniu aplikacji
   const initAuth = async () => {
     if (isLoggedIn.value && !user.value) {
       await fetchUser()
     }
   }
 
-  // NOWA FUNKCJA: Przekierowanie do ustawień
-  const goToSettings = () => {
-    return navigateTo('/dashboard/settings')
-  }
+  const goToDashboard = () => navigateTo('/dashboard')
+  const goToSettings = () => navigateTo('/dashboard/settings')
 
   return {
     user,
     isLoggedIn,
     login: () => redirectToLogin(),
-    register: () => redirectToLogin('signup'),
+    register: () => redirectToLogin('create'),
     handleCallback,
-    fetchUser,
     logout,
     initAuth,
-    goToSettings, // Dodano nową funkcję
+    goToDashboard,
+    goToSettings,
   }
 }

@@ -1,44 +1,56 @@
 <template>
-  <div :class="colorMode.preference">
+  <div>
     <header class="shadow-sm border-b">
       <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
         <NuxtLink to="/" class="text-xl font-bold">Moja Aplikacja</NuxtLink>
         <nav class="flex items-center space-x-4">
-          <!-- Widok dla niezalogowanego użytkownika -->
           <template v-if="!isLoggedIn">
             <Button @click="login">Login</Button>
             <Button variant="outline" @click="register">Register</Button>
           </template>
-          <!-- Widok dla zalogowanego użytkownika -->
           <template v-else>
-            <span class="text-sm font-medium">Witaj, {{ user?.name || user?.email }}</span>
-            <Button variant="outline" @click="logout">Logout</Button>
+                        <DropdownMenuContent align="end" class="w-48">
+              <DropdownMenuItem @click="goToSettings">
+                <Icon icon="lucide:settings" class="w-4 h-4 mr-2" />
+                Ustawienia
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem @click="logout">
+                <Icon icon="lucide:log-out" class="w-4 h-4 mr-2" />
+                Wyloguj
+              </DropdownMenuItem>
+            </DropdownMenuContent>
           </template>
           
-          <!-- Przełącznik motywu -->
-          <DropdownMenu>
-            <DropdownMenuTrigger as-child>
-              <Button variant="ghost" class="relative p-2">
-                <Icon
-                  icon="radix-icons:moon"
-                  class="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-                />
-                <Icon
-                  icon="radix-icons:sun"
-                  class="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-                />
-                <span class="sr-only">Toggle theme</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem @click="colorMode.preference = 'light'">Light</DropdownMenuItem>
-              <DropdownMenuItem @click="colorMode.preference = 'dark'">Dark</DropdownMenuItem>
-              <DropdownMenuItem @click="colorMode.preference = 'system'">System</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ClientOnly>
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <Button variant="ghost" class="relative p-2">
+                  <Icon
+                    icon="radix-icons:moon"
+                    class="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+                  />
+                  <Icon
+                    icon="radix-icons:sun"
+                    class="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+                  />
+                  <span class="sr-only">Toggle theme</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem @click="colorMode.preference = 'light'">Light</DropdownMenuItem>
+                <DropdownMenuItem @click="colorMode.preference = 'dark'">Dark</DropdownMenuItem>
+                <DropdownMenuItem @click="colorMode.preference = 'system'">System</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </ClientOnly>
         </nav>
       </div>
     </header>
+
+    <main class="p-4">
+      <NuxtPage />
+    </main>
   </div>
 </template>
 
@@ -52,7 +64,6 @@ import {
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
 
-// Używamy naszego composable do autoryzacji
-const { user, isLoggedIn, login, register, logout } = useAuth()
+const { goToSettings, isLoggedIn, login, register, logout } = useAuth()
 const colorMode = useColorMode()
 </script>

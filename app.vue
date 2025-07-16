@@ -1,16 +1,11 @@
 <template>
-
-  <div :class="colorMode.preference">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 const { initAuth } = useAuth()
-const colorMode = useColorMode()
-
 
 onMounted(async () => {
   await initAuth()
