@@ -1,11 +1,55 @@
 <template>
-  <SidebarProvider>
+
     <div class="flex flex-col h-screen">
-      <header class="shadow-sm border-b">
-        <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
-          <NuxtLink to="/" class="text-xl font-bold">Kontrahent.io</NuxtLink>
-          <nav class="flex items-center space-x-4">
-            <template v-if="!isLoggedIn">
+      <div class="flex flex-1 overflow-hidden">
+        <SidebarProvider>
+        <Sidebar class="border-r">
+    <SidebarHeader>
+             <NuxtLink to="/dashboard" class="text-xl font-bold flex items-center gap-2">
+                <Icon icon="lucide:scan-search" class="h-6 w-6" />
+                <span>BiznesSkan</span>
+            </NuxtLink>
+          </SidebarHeader>
+          <SidebarContent class="p-2">
+            <SidebarMenu>
+
+              <SidebarGroup>
+                <SidebarGroupLabel>Ustawienia</SidebarGroupLabel>
+                <SidebarMenuItem>
+                  <NuxtLink to="/settings/notifications" custom v-slot="{ href, navigate, isActive }">
+                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
+                      <Icon icon="lucide:bell" class="w-4 h-4" />
+                      Powiadomienia
+                    </SidebarMenuButton>
+                  </NuxtLink>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <NuxtLink to="/settings" custom v-slot="{ href, navigate, isActive }">
+                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
+                      <Icon icon="lucide:settings" class="w-4 h-4" />
+                      Ogólne
+                    </SidebarMenuButton>
+                  </NuxtLink>
+                </SidebarMenuItem>
+              </SidebarGroup>
+
+              <SidebarSeparator class="my-4" />
+
+              <SidebarGroup>
+                <SidebarGroupLabel>Informacje</SidebarGroupLabel>
+                <SidebarMenuItem>
+                  <NuxtLink to="/settings/documents" custom v-slot="{ href, navigate, isActive }">
+                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
+                      <Icon icon="lucide:file-text" class="w-4 h-4" />
+                      Dokumenty
+                    </SidebarMenuButton>
+                  </NuxtLink>
+                </SidebarMenuItem>
+              </SidebarGroup>
+
+            </SidebarMenu>
+          </SidebarContent>
+          <template v-if="!isLoggedIn">
               <Button @click="login">Login</Button>
               <Button variant="outline" @click="register">Register</Button>
             </template>
@@ -49,68 +93,16 @@
                 </DropdownMenuContent>
               </DropdownMenu>
             </ClientOnly>
-          </nav>
-        </div>
-      </header>
-
-      <div class="flex flex-1 overflow-hidden">
-        <Sidebar class="border-r">
-          <SidebarHeader>
-            <NuxtLink to="/dashboard" class="text-xl font-bold flex items-center gap-2">
-              <Icon icon="lucide:scan-search" class="h-6 w-6" />
-              <span>BiznesSkan</span>
-            </NuxtLink>
-          </SidebarHeader>
-
-          <SidebarContent class="p-2">
-            <SidebarMenu>
-
-              <SidebarSeparator class="my-4" />
-
-              <SidebarGroup>
-                <SidebarGroupLabel>Ustawienia</SidebarGroupLabel>
-                <SidebarMenuItem>
-                  <NuxtLink to="/dashboard/settings/notifications" custom v-slot="{ href, navigate, isActive }">
-                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
-                      <Icon icon="lucide:bell" class="w-4 h-4" />
-                      Powiadomienia
-                    </SidebarMenuButton>
-                  </NuxtLink>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <NuxtLink to="/dashboard/settings" custom v-slot="{ href, navigate, isActive }">
-                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
-                      <Icon icon="lucide:settings" class="w-4 h-4" />
-                      Ogólne
-                    </SidebarMenuButton>
-                  </NuxtLink>
-                </SidebarMenuItem>
-              </SidebarGroup>
-
-              <SidebarSeparator class="my-4" />
-
-              <SidebarGroup>
-                <SidebarGroupLabel>Informacje</SidebarGroupLabel>
-                <SidebarMenuItem>
-                  <NuxtLink to="/dashboard/settings/documents" custom v-slot="{ href, navigate, isActive }">
-                    <SidebarMenuButton :is-active="isActive" :href="href" @click="navigate" as="a">
-                      <Icon icon="lucide:file-text" class="w-4 h-4" />
-                      Dokumenty
-                    </SidebarMenuButton>
-                  </NuxtLink>
-                </SidebarMenuItem>
-              </SidebarGroup>
-
-            </SidebarMenu>
-          </SidebarContent>
         </Sidebar>
 
         <SidebarInset class="flex-1 overflow-y-auto p-6">
           <NuxtPage />
         </SidebarInset>
+        
+        </SidebarProvider>
       </div>
     </div>
-  </SidebarProvider>
+
 </template>
 
 <script setup lang="ts">

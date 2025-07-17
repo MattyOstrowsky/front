@@ -18,7 +18,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; //
 
 definePageMeta({
-  layout: 'dashboard',
+  layout: 'settings',
   middleware: 'auth'
 })
 </script>

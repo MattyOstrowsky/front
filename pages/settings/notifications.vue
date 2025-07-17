@@ -38,7 +38,7 @@ import { Switch } from '@/components/ui/switch'; // Musimy dodać ten komponent
 import { Label } from '@/components/ui/label';   // Musimy dodać ten komponent
 
 definePageMeta({
-  layout: 'dashboard',
+  layout: 'settings',
   middleware: 'auth'
 })
 </script>
