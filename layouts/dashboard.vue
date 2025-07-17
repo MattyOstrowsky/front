@@ -84,8 +84,7 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator
+  DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
 
 const { goToSettings, isLoggedIn, login, register, logout } = useAuth()
