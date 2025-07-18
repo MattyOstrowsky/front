@@ -49,50 +49,62 @@
 
             </SidebarMenu>
           </SidebarContent>
-          <template v-if="!isLoggedIn">
-              <Button @click="login">Login</Button>
-              <Button variant="outline" @click="register">Register</Button>
-            </template>
-            <template v-else>
-              <DropdownMenu>
-                <DropdownMenuTrigger as-child>
-                  <Button variant="ghost" class="relative p-2">
-                    <Icon icon="lucide:user" class="h-5 w-5" />
-                    <span class="sr-only">Open user menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" class="w-48">
-                  <DropdownMenuItem @click="goToSettings">
-                    <Icon icon="lucide:settings" class="w-4 h-4 mr-2" />
-                    Ustawienia
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem @click="logout">
-                    <Icon icon="lucide:log-out" class="w-4 h-4 mr-2" />
-                    Wyloguj
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </template>
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button variant="ghost" class="w-full justify-start items-center text-left h-auto px-3 py-2">
+                <div class="h-8 w-8 rounded-full bg-background flex items-center justify-center mr-3">
+                  <Icon icon="lucide:user" class="h-4 w-4 text-muted-foreground" />
+                </div>
+                <div class="flex flex-col items-start">
+                    <span class="text-sm font-medium leading-none">{{ user?.name || 'Użytkownik' }}</span>
+                    <span class="text-xs text-muted-foreground leading-none">{{ user?.email }}</span>
+                </div>
+                <Icon icon="lucide:chevrons-up-down" class="ml-auto h-4 w-4 text-muted-foreground" />
+              </Button>
+            </DropdownMenuTrigger>
 
-            <ClientOnly>
-              <DropdownMenu>
-                <DropdownMenuTrigger as-child>
-                  <Button variant="ghost" class="relative p-2">
-                    <Icon icon="radix-icons:moon"
-                      class="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <Icon icon="radix-icons:sun"
-                      class="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span class="sr-only">Toggle theme</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem @click="colorMode.preference = 'light'">Light</DropdownMenuItem>
-                  <DropdownMenuItem @click="colorMode.preference = 'dark'">Dark</DropdownMenuItem>
-                  <DropdownMenuItem @click="colorMode.preference = 'system'">System</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </ClientOnly>
+            <DropdownMenuContent align="end" side="top" class="w-68 mb-1">
+              <DropdownMenuLabel>Zarządzaj kontem</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+
+              <NuxtLink to="/settings" custom v-slot="{ navigate }">
+                <DropdownMenuItem @click="navigate">
+                  <Icon icon="lucide:settings" class="w-4 h-4 mr-2" />
+                  <span>Ustawienia</span>
+                </DropdownMenuItem>
+              </NuxtLink>
+
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Icon icon="lucide:sun-moon" class="w-4 h-4 mr-2" />
+                  <span>Zmień motyw</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem @click="colorMode.preference = 'light'">
+                      <Icon icon="lucide:sun" class="w-4 h-4 mr-2" />
+                      Jasny
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="colorMode.preference = 'dark'">
+                      <Icon icon="lucide:moon" class="w-4 h-4 mr-2" />
+                      Ciemny
+                    </DropdownMenuItem>
+                    <DropdownMenuItem @click="colorMode.preference = 'system'">
+                      <Icon icon="lucide:laptop" class="w-4 h-4 mr-2" />
+                      Systemowy
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem @click="logout">
+                <Icon icon="lucide:log-out" class="w-4 h-4 mr-2" />
+                <span>Wyloguj</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </Sidebar>
 
         <SidebarInset class="flex-1 overflow-y-auto p-6">
@@ -116,6 +128,6 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
-const { goToSettings, isLoggedIn, login, register, logout } = useAuth()
+const { goToSettings, isLoggedIn, login, register, logout, user } = useAuth()
 const colorMode = useColorMode()
 </script>
