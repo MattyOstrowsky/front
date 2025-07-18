@@ -1,17 +1,16 @@
 <template>
-  <div>
-    <h1 class="text-3xl font-bold tracking-tight">Historia weryfikacji</h1>
+  <div class="h-full">
+    <h1 class="text-3xl font-bold tracking-tight">Raporty</h1>
     <p class="text-muted-foreground mb-6">
-      Przeglądaj i zarządzaj swoimi poprzednimi wyszukiwaniami.
+      Generuj i pobieraj szczegółowe raporty na temat zweryfikowanych firm.
     </p>
-    <Card>
+    <Card class="h-full">
       <CardHeader>
-        <CardTitle>Twoja historia</CardTitle>
+        <CardTitle>Twoje raporty</CardTitle>
       </CardHeader>
       <CardContent>
-        <!-- Placeholder for a data table -->
         <p class="text-muted-foreground">
-          Wkrótce znajdziesz tutaj tabelę z historią swoich weryfikacji.
+          Wkrótce znajdziesz tutaj listę wygenerowanych raportów.
         </p>
       </CardContent>
     </Card>

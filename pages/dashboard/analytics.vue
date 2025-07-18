@@ -1,17 +1,16 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold tracking-tight">Historia weryfikacji</h1>
+    <h1 class="text-3xl font-bold tracking-tight">Analityka</h1>
     <p class="text-muted-foreground mb-6">
-      Przeglądaj i zarządzaj swoimi poprzednimi wyszukiwaniami.
+      Szczegółowe statystyki i trendy dotyczące Twoich weryfikacji.
     </p>
     <Card>
       <CardHeader>
-        <CardTitle>Twoja historia</CardTitle>
+        <CardTitle>Statystyki</CardTitle>
       </CardHeader>
       <CardContent>
-        <!-- Placeholder for a data table -->
         <p class="text-muted-foreground">
-          Wkrótce znajdziesz tutaj tabelę z historią swoich weryfikacji.
+          Wkrótce znajdziesz tutaj zaawansowane wykresy i analizy.
         </p>
       </CardContent>
     </Card>
