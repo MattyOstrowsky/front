@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <h1 class="text-3xl font-bold tracking-tight">Weryfikacja kontrahenta</h1>
     <p class="text-muted-foreground mb-6">
       Wpisz NIP, REGON lub nazwę firmy, aby rozpocząć.
     </p>
-    <Card class="max-w-3xl">
+    <Card>
       <CardHeader>
         <CardTitle>Wyszukaj firmę</CardTitle>
         <CardDescription>
-          Dane pobierane są w czasie rzeczywistym z oficjalnych źródeł (GUS, CEIDG, KRS).
+          asDane pobierane są w czasie rzeczywistym z oficjalnych źródeł (GUS, CEIDG, KRS).
         </CardDescription>
       </CardHeader>
       <CardContent>
