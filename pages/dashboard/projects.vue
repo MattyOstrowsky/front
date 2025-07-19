@@ -4,7 +4,7 @@
     <p class="text-muted-foreground mb-6">
       Grupuj i zarządzaj monitorowanymi kontrahentami w dedykowanych projektach.
     </p>
-    <Card class="h-full">
+    <Card >
       <CardHeader>
         <CardTitle>Twoje projekty</CardTitle>
       </CardHeader>
@@ -24,4 +24,8 @@ definePageMeta({
   layout: 'dashboard',
   middleware: 'auth'
 })
+const { setHeader } = useHeader();
+onMounted(() => {
+  setHeader({ breadcrumbs: [{ label: 'Projekty' }] });
+});
 </script>

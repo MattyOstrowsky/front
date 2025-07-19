@@ -11,6 +11,10 @@
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
+definePageMeta({
+  layout: 'landing'
+});
+
 // Używamy naszego composable
 const { handleCallback } = useAuth()
 const route = useRoute()

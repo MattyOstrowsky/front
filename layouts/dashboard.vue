@@ -1,6 +1,6 @@
 <template>
   <SidebarProvider>
-      <Sidebar class="border-r flex min-h-screen bg-muted/30">
+      <Sidebar class=" flex min-h-screen bg-muted/30">
         <SidebarHeader>
           <NuxtLink to="/dashboard" class="flex items-center gap-2 text-xl font-bold">
             <Icon icon="lucide:shield-check" class="h-6 w-6 text-primary" />
@@ -170,7 +170,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { Sidebar, SidebarContent, SidebarHeader, SidebarFooter, SidebarMenu, SidebarMenuItem, SidebarGroup, SidebarGroupLabel, SidebarMenuButton, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'

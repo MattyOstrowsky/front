@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen bg-background flex flex-col">
     <!-- Header -->
-    <header class="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div class="container flex h-16 items-center justify-between px-4 md:px-6">
+    <header class="sticky flex h-16 items-center justify-between px-4 md:px-6 top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+
         <NuxtLink to="/" class="flex items-center space-x-2">
           <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <Shield class="h-5 w-5 text-primary-foreground" />
@@ -33,8 +33,24 @@
           <Button variant="ghost" size="icon" class="md:hidden">
             <Menu class="h-5 w-5" />
           </Button>
+          <ClientOnly>
+                <DropdownMenu>
+                  <DropdownMenuTrigger as-child>
+                    <Button variant="ghost" size="icon">
+                      <Icon icon="radix-icons:moon" class="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                      <Icon icon="radix-icons:sun" class="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                      <span class="sr-only">Zmień motyw</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem @click="colorMode.preference = 'light'">Jasny</DropdownMenuItem>
+                    <DropdownMenuItem @click="colorMode.preference = 'dark'">Ciemny</DropdownMenuItem>
+                    <DropdownMenuItem @click="colorMode.preference = 'system'">Systemowy</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </ClientOnly>
         </div>
-      </div>
+ 
     </header>
 
     <!-- Page Content -->
@@ -122,6 +138,9 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
 import { Shield, Menu, Phone, Mail, MapPin } from "lucide-vue-next"
+import { Icon } from '@iconify/vue'
 
+
+const colorMode = useColorMode()
 const { login, register } = useAuth();
 </script>

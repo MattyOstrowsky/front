@@ -4,7 +4,7 @@
     <p class="text-muted-foreground mb-6">
       Generuj i pobieraj szczegółowe raporty na temat zweryfikowanych firm.
     </p>
-    <Card class="h-full">
+    <Card >
       <CardHeader>
         <CardTitle>Twoje raporty</CardTitle>
       </CardHeader>
@@ -24,4 +24,8 @@ definePageMeta({
   layout: 'dashboard',
   middleware: 'auth'
 })
+const { setHeader } = useHeader();
+onMounted(() => {
+  setHeader({ breadcrumbs: [{ label: 'Raporty' }] });
+});
 </script>

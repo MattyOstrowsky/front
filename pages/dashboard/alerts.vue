@@ -24,4 +24,8 @@ definePageMeta({
   layout: 'dashboard',
   middleware: 'auth'
 })
+const { setHeader } = useHeader();
+onMounted(() => {
+  setHeader({ breadcrumbs: [{ label: 'Alerty' }] });
+});
 </script>

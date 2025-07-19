@@ -42,7 +42,7 @@
           <img src="https://placehold.co/800x350/e2e8f0/334155?text=Wykres+Aktywności" alt="Wykres aktywności" class="w-full h-auto" />
         </CardContent>
       </Card>
-      <Card class="col-span-3">
+      <Card class="col-span-3 bg-gradient-to-b from-card to-muted/80">
         <CardHeader>
           <CardTitle>Ostatnie weryfikacje</CardTitle>
           <CardDescription>Ostatnie 5 wyszukanych przez Ciebie firm.</CardDescription>
@@ -70,5 +70,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 definePageMeta({
   layout: 'dashboard',
   middleware: 'auth'
+});
+const { setHeader } = useHeader();
+onMounted(() => {
+  setHeader({ breadcrumbs: [{ label: 'Przegląd' }] });
 });
 </script>
